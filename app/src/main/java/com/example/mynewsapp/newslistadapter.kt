@@ -6,7 +6,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class newslistadapter(val items: ArrayList<String>, private val listner:NewsItemCLicked): RecyclerView.Adapter<newsviewholder>() {
+class newslistadapter(private val listner:NewsItemCLicked): RecyclerView.Adapter<newsviewholder>() {
+
+    private val items: ArrayList<News> =ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): newsviewholder {
 
@@ -25,7 +27,13 @@ class newslistadapter(val items: ArrayList<String>, private val listner:NewsItem
     override fun onBindViewHolder(holder: newsviewholder, position: Int) {
 
         val currentItem = items[position]
-        holder.titleView.text = currentItem
+        holder.titleView.text = currentItem.title
+    }
+    fun updateNews(updatedNews: ArrayList<News>){
+        items.clear()
+        items.addAll(updatedNews)
+
+        notifyDataSetChanged()
     }
 
 }
@@ -35,5 +43,5 @@ class newsviewholder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 }
 
 interface NewsItemCLicked{
-    fun onItemClicked(item: String)
+    fun onItemClicked(item: News)
 }
